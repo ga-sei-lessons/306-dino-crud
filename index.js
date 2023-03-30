@@ -6,6 +6,7 @@ const fs = require('fs')
 const app = express()
 const PORT = 8000
 app.set("view engine", "ejs")
+app.use(express.urlencoded({ extended: false }))
 
 // helper function to read the dino db
 const readDinos = () => {
@@ -36,12 +37,20 @@ app.get('/dinosaurs', (req, res) => {
 
 // GET /dinosuars/new -- show route for a form that posts to POST /dinosaurs
 app.get('/dinosaurs/new', (req, res) => {
-    res.send('show a form that will POST a new dino')
+    res.render("dinos/new.ejs")
 })
 
 // POST /dinosaurs -- CREATE a new dino in the db
 app.post('/dinosaurs', (req, res) => {
-    res.send('CREATE a new dino!')
+    console.log(req.body) // POST form data shows up in the req.body
+    const dinos = readDinos()
+    // push the dino from the req.body into the array json dinos
+    dinos.push(req.body)
+    // write the json file to save to disk
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinos))
+    // tell the browser to redirect 
+    // do another GET request on a specific url
+    res.redirect('/dinosaurs')
 })
 
 // GET /dinosaurs/:id -- READ a single dino @ :id
