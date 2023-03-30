@@ -28,7 +28,18 @@ app.get('/', (req, res) => {
 
 // GET /dinosaurs -- READ return an array of dinos
 app.get('/dinosaurs', (req, res) => {
-    const dinos = readDinos()
+    let dinos = readDinos()
+    console.log(req.query)
+
+    // if the user has searched, filter the dinos array
+    if(req.query.dinoFilter) {
+        dinos = dinos.filter(dino => {
+            // compare lower case strings for case insensitivity
+            console.log(dino)
+            return dino.name.toLowerCase().includes(req.query.dinoFilter.toLowerCase())
+        })
+    }
+
     res.render("dinos/index.ejs", {
         // equal to { dinos: dinos }
         dinos
@@ -55,7 +66,15 @@ app.post('/dinosaurs', (req, res) => {
 
 // GET /dinosaurs/:id -- READ a single dino @ :id
 app.get('/dinosaurs/:id', (req, res) => {
-    res.send('show details about dino id: ' + req.params.id)
+    // read the dino json data
+    const dinos = readDinos()
+    // lookup one dino using the req.params
+    const foundDino = dinos[req.params.id]
+    // render the details template
+    res.render("dinos/details.ejs", {
+        dino: foundDino,
+        id: req.params.id
+    })
 })
 
 // listen on a port
