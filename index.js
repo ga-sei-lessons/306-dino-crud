@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // middleware
 app.use(methodOverride('_method'))
+app.use(express.static("public"))
 
 // routes
 // GET / -- index show route for the app
