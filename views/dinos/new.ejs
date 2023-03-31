@@ -6,19 +6,20 @@
 this form will create an object in the request body (req.body)
 {
     // the keys correspond to the 'name' properties of the inputs
-    type: what the user typed in
     name: what the user typed in,
+    type: what the user typed in,
     // banana: ....
 }
 
  -->
 
 <form method="POST" action="/dinosaurs">
-    <label for="dinoType">Type:</label>
-    <input id="dinoType" type="text" name="type" placeholder="dino typo..." />
-
+    
     <label for="dinoName">Name:</label>
     <input id="dinoName" type="text" name="name" placeholder="dino name..." />
+
+    <label for="dinoType">Type:</label>
+    <input id="dinoType" type="text" name="type" placeholder="dino typo..." />
 
     <!-- <input name="banana" /> -->
 
