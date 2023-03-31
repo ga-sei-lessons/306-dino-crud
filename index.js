@@ -1,11 +1,15 @@
 // required packages
 const express = require('express')
+const methodOverride = require('method-override')
 
 // app config
 const app = express()
 const PORT = 8000
 app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: false }))
+
+// middleware
+app.use(methodOverride('_method'))
 
 // routes
 // GET / -- index show route for the app

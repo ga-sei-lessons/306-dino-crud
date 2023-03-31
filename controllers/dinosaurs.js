@@ -66,5 +66,20 @@ router.get('/:id', (req, res) => {
     })
 })
 
+// DELETE /dinosaurs/:id -- DELETE a single dino @ :id
+router.delete('/:id', (req, res) => {
+    let dinosaurs = fs.readFileSync('./dinosaurs.json')
+    let dinoData = JSON.parse(dinosaurs)
+
+    // remove deleted dino from dino.json
+    dinoData.splice(req.params.id, 1)
+
+    // save new dino file
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinoData))
+
+    // redirect to index route AKA GET /dinosaurs
+    res.redirect('/dinosaurs')
+})
+
 // export the router
 module.exports = router
